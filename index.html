@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VJWJCFRJ92"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VJWJCFRJ92');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="icon.png">
+  
+  <title>Offline Dice - The Official Streamer Dice Game</title>
+  <meta name="description" content="Play Offline Dice! The ultimate custom color dice simulator used by top TikTok streamers. Roll the dice now!">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:title" content="Offline Dice - The Official Streamer Dice Game">
+  <meta property="og:description" content="The custom color dice simulator used by your favorite streamers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://offline-dice.app/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700;800;900&family=Lilita+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    @font-face {
+      font-family: 'Marvin Regular';
+      src: url('397-font_1.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    :root {
+      --theme-panel-bg: rgba(18, 18, 18, 0.85); 
+      --vip-outline: #FFD700;
+    }
+
+    body {
+      padding-bottom: 55px;
+    }
+
+    .main-layout {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    .sidebar, .game-center {
+      background-color: var(--theme-panel-bg) !important;
+      border: 3px solid #FFFFFF !important;
+      border-radius: 15px !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+      color: white;
+    }
+
+    .sidebar {
+      width: 250px;
+      flex-shrink: 0;
+      padding: 15px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .game-center {
+      flex: 1;
+      max-width: 520px;
+      padding: 15px 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      color: white;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    .game-center .roll-title {
+      font-family: 'Marvin Regular', sans-serif !important;
+      font-size: 32px !important;
+      color: #FFFFFF !important;
+      text-align: center !important;
+      margin-top: 0 !important;
+      margin-bottom: 15px !important;
+      letter-spacing: 2.5px !important;
+      text-transform: uppercase !important;
+      font-weight: normal !important; 
+      text-shadow: 
+        -2px -2px 0 #777777, 
+         2px -2px 0 #777777, 
+        -2px  2px 0 #777777, 
+         2px  2px 0 #777777, 
+        -3px  0px 0 #444444, 
+         3px  0px 0 #444444, 
+         0px -3px 0 #444444, 
+         0px  3px 0 #444444, 
+         0px  5px 0px #2A2A2A, 
+         0px  8px 15px rgba(0, 0, 0, 0.9) !important;
+    }
+
+    .streamer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .streamer-card-link {
+      text-decoration: none;
+    }
+    .streamer-card {
+      position: relative !important;
+      background: rgba(15, 15, 20, 0.7) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-left: 4px solid var(--theme-accent, #2196f3) !important;
+      border-right: 4px solid var(--theme-accent, #2196f3) !important;
+      border-radius: 10px !important;
+      padding: 10px 12px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 12px !important;
+      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+      overflow: visible !important;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+    }
+    .streamer-card:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.25) !important;
+      border-left-color: var(--theme-accent, #2196f3) !important;
+      border-right-color: var(--theme-accent, #2196f3) !important;
+      transform: translateX(4px) !important;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 12px var(--theme-accent, rgba(33, 150, 243, 0.3)) !important;
+    }
+    
+    .streamer-card > img {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+      object-fit: cover !important;
+      flex-shrink: 0 !important;
+    }
+    .verify-badge {
+      width: 17px !important;
+      height: 17px !important;
+      border-radius: 0 !important;
+      margin-left: 4px;
+      vertical-align: -3px;
+      display: inline-block;
+    }
+    
+    .streamer-card div strong { 
+      font-size: 14px !important; 
+      color: #FFFFFF !important; 
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+    }
+    .streamer-card div span { 
+      font-size: 11px !important; 
+      color: rgba(255, 255, 255, 0.65) !important; 
+      display: block; 
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 500 !important;
+      margin-top: 1px !important;
+    }
+
+    .live-badge {
+      position: absolute !important;
+      top: 0 !important;
+      right: 12px !important;
+      transform: translateY(-50%) !important;
+      background: #FF0000 !important;
+      color: #FFFFFF !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 900 !important;
+      font-size: 9.5px !important;
+      padding: 2px 7px !important;
+      border-radius: 5px !important;
+      letter-spacing: 0.8px !important;
+      text-transform: uppercase !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      border: 1.5px solid #FFFFFF !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+      z-index: 100 !important;
+      pointer-events: none;
+    }
+
+    .streamer-card.is-live {
+      border: 2px solid #FF0000 !important;
+      background: rgba(255, 0, 0, 0.12) !important;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
+    }
+
+    .controls {
+      display: flex !important;
+      gap: 10px !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+    .controls select {
+      flex: 1 !important;
+      min-width: 0 !important;
+      background-color: #FFFFFF !important;
+      color: #111111 !important;
+      border: 3px solid var(--theme-accent, #2196f3) !important;
+      padding: 12px 36px 12px 11px !important;
+      border-radius: 10px !important;
+      font-family: 'Lilita One', cursive !important;
+      font-size: 19px !important;
+      letter-spacing: 1px !important;
+      text-transform: uppercase !important;
+      text-align: left !important; 
+      cursor: pointer !important;
+      outline: none !important;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+      transition: all 0.2s ease-in-out !important;
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 12px center !important;
+      background-size: 16px !important;
+    }
+
+    .controls select:hover {
+      background-color: #F8F9FA !important;
+      transform: scale(1.02) !important;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .controls select option {
+      background-color: #FFFFFF !important;
+      color: #111111 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-size: 20px !important;
+      font-weight: 800 !important;
+      padding: 10px !important;
+    }
+
+    .dice-display {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px !important;
+    }
+
+    .die {
+      border: 7.5px solid #FFFFFF !important; 
+      border-radius: 15px !important;
+      box-sizing: border-box !important;
+      width: 86px !important;
+      height: 86px !important;
+      will-change: transform; 
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    .die-dot {
+      background-color: #FFFFFF !important;
+      border-radius: 50% !important;
+      box-shadow: none !important;
+      width: 15px !important; 
+      height: 15px !important; 
+    }
+
+    .overlay-dice-container {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 9px !important;
+    }
+
+    .roll-btn {
+      width: 100% !important;
+      background: linear-gradient(180deg, #FFEA3D 0%, #FF9800 100%) !important;
+      color: #FFFFFF !important;
+      border: 2px solid #FFE57F !important;
+      padding: 6px 16px !important;
+      font-size: 28px !important;
+      font-family: 'Luckiest Guy', cursive !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      border-radius: 12px !important;
+      cursor: pointer;
+      margin-bottom: 12px !important;
+      display: block;
+      box-sizing: border-box !important;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        inset 0 2px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.2),
+        0 4px 0 #C86A00,
+        0 8px 15px rgba(0, 0, 0, 0.4) !important;
+      text-shadow: 
+        2px 2px 0px #E67E00, 
+        -2px -2px 0px #E67E00, 
+        2px -2px 0px #E67E00, 
+        -2px 2px 0px #E67E00 !important;
+      transition: filter 0.15s ease !important;
+    }
+
+    .roll-btn:hover:not(:disabled) {
+      filter: brightness(1.08);
+      box-shadow: 
+        inset 0 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.2),
+        0 4px 0 #C86A00,
+        0 8px 15px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .roll-btn:active:not(:disabled) {
+      transform: none !important;
+      box-shadow: 
+        inset 0 2px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.2),
+        0 4px 0 #C86A00,
+        0 8px 15px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .roll-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(0.6);
+      transform: none !important;
+    }
+
+    .stretch-text {
+      display: inline-block;
+      transform: scaleX(1.12);
+      transform-origin: center;
+    }
+
+    .counter-row {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      background: rgba(18, 18, 22, 0.85) !important;
+      border: 2px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 12px !important;
+      padding: 12px 22px !important;
+      margin: 0 0 10px 0 !important;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4) !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+    }
+
+    .counter-side {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 6px !important;
+      font-size: 14px !important;
+      font-weight: bold !important;
+      background-color: transparent !important;
+      padding: 0 !important;
+      min-width: 60px !important;
+    }
+
+    .counter-side span {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      transition: color 0.1s ease, transform 0.1s ease !important;
+      box-shadow: none !important;
+    }
+
+    .side-left {
+      align-items: flex-start !important;
+    }
+
+    .side-left span {
+      color: #ff6b6b !important;
+    }
+
+    .side-left span:hover {
+      color: #ffffff !important;
+      transform: scale(1.1) !important;
+    }
+
+    .side-left span:active {
+      transform: scale(0.95) !important;
+    }
+
+    .side-right {
+      align-items: flex-end !important;
+    }
+
+    .side-right span {
+      color: #51cf66 !important;
+    }
+
+    .side-right span:hover {
+      color: #ffffff !important;
+      transform: scale(1.1) !important;
+    }
+
+    .side-right span:active {
+      transform: scale(0.95) !important;
+    }
+
+    .counter-center-wrapper {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      position: relative !important;
+      flex: 1 !important;
+    }
+
+    .counter-item-selector {
+      position: absolute !important;
+      right: calc(50% + 55px) !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 10 !important;
+    }
+
+    .selected-item-btn {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 2px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 10px !important;
+      padding: 6px 10px !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4) !important;
+    }
+
+    .selected-item-btn:hover {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .item-img-display {
+      width: 52px !important;
+      height: 52px !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+
+    .dropdown-arrow {
+      color: #FFFFFF !important;
+      font-size: 12px !important;
+      opacity: 0.85 !important;
+      user-select: none !important;
+    }
+
+    .item-dropdown-menu {
+      display: none;
+      position: absolute !important;
+      top: calc(100% + 8px) !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      background: rgba(18, 18, 22, 0.95) !important;
+      border: 2px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 12px !important;
+      padding: 8px !important;
+      z-index: 1000 !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8) !important;
+      min-width: 68px !important;
+    }
+
+    .item-dropdown-menu.show {
+      display: flex !important;
+    }
+
+    .item-option {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 6px !important;
+      border-radius: 8px !important;
+      cursor: pointer !important;
+      transition: background 0.2s !important;
+      border: 1px solid transparent !important;
+    }
+
+    .item-option:hover {
+      background: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .item-option.active {
+      border-color: var(--theme-accent, #2196f3) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .item-option img {
+      width: 50px !important;
+      height: 50px !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+
+    .counter-center { 
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 900 !important;
+      font-size: 46px !important;
+      color: #ffffff !important;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5) !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: auto !important;
+      min-width: auto !important;
+      padding: 0 !important;
+    }
+
+    .stats-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1px;
+      width: 100%;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      position: relative;
+      top: -5px;
+    }
+    .stat-pill {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #FFFFFF;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.2s ease;
+    }
+    .stat-pill:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+    .small-grey-text { 
+      color: #e0e0e0; 
+      font-size: 17px; 
+      font-weight: 500; 
+      font-family: 'Fredoka', sans-serif;
+      margin-top: 8px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .history-section {
+      margin-top: 15px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .inline-history-list {
+      display: flex;
+      flex-direction: column; 
+      gap: 8px;
+      width: 100%;
+      background: rgba(10, 10, 14, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 10px;
+      box-sizing: border-box;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .history-row {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .history-row:hover {
+      transform: translateX(3px);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.06) 100%);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .history-number {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 800;
+      color: #00D2FF;
+      background: rgba(0, 112, 255, 0.15);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 12px;
+      text-align: center;
+      min-width: 28px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .mini-die {
+      width: 26px !important;
+      height: 26px !important;
+      border-radius: 7px !important;
+      border: 2.5px solid #FFFFFF !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      box-sizing: border-box !important;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.4) !important;
+      transition: transform 0.15s ease;
+    }
+
+    .mini-die:hover {
+      transform: scale(1.15);
+    }
+
+    .mini-die-dot {
+      width: 5px !important;
+      height: 5px !important;
+      background-color: #FFFFFF !important;
+      border-radius: 50% !important;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,0.3) !important;
+    }
+
+    .info-square {
+      background: linear-gradient(135deg, rgba(20, 20, 26, 0.85) 0%, rgba(12, 12, 18, 0.85) 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-top: 3px solid var(--theme-accent, #2196f3) !important;
+      border-radius: 14px !important;
+      padding: 18px 20px !important;
+      margin-top: 15px !important;
+      text-align: center !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    .info-square:hover {
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      border-top-color: var(--theme-accent, #2196f3) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6) !important;
+    }
+    .info-square-title {
+      font-family: 'Lilita One', cursive !important;
+      font-size: 20px !important;
+      color: #FFFFFF !important;
+      margin-top: 0 !important;
+      margin-bottom: 10px !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+      letter-spacing: 1px !important;
+      text-transform: uppercase !important;
+    }
+    .info-square-text {
+      font-family: 'Fredoka', sans-serif !important;
+      font-size: 13.5px !important;
+      color: rgba(255, 255, 255, 0.88) !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+      margin: 0 0 10px 0 !important;
+    }
+    .info-square-text:last-child {
+      margin-bottom: 0 !important;
+    }
+
+    .roll-overlay {
+      position: fixed;
+      top: 0; 
+      left: 0; 
+      width: 100vw; 
+      height: 100vh;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      background-color: #000;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    .roll-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .overlay-title {
+      font-family: 'Marvin Regular', sans-serif;
+      font-size: 36px; 
+      color: #FFFFFF;
+      letter-spacing: 2px;
+      margin-bottom: 18px; 
+      font-weight: normal !important;
+      text-shadow: 
+        2px 2px 0 #555, 
+        -2px -2px 0 #555, 
+        2px -2px 0 #555, 
+        -2px 2px 0 #555, 
+        4px 4px 0 #111;
+    }
+
+    .overlay-dice-container {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 9px !important;
+    }
+
+    @keyframes diceShake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      12% { transform: translate(-3px, 2px) rotate(-2deg); }
+      25% { transform: translate(3px, -3px) rotate(2deg); }
+      37% { transform: translate(-2px, -3px) rotate(-1deg); }
+      50% { transform: translate(3px, 3px) rotate(2deg); }
+      62% { transform: translate(-3px, -2px) rotate(-2deg); }
+      75% { transform: translate(2px, 3px) rotate(1deg); }
+      87% { transform: translate(-2px, 2px) rotate(-1deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    
+    .initial-shake {
+      animation: diceShake 0.6s ease-in-out 1 forwards !important; 
+    }
+
+    .big-die {
+      width: 86px !important;
+      height: 86px !important;
+      border-radius: 15px !important;
+      background-color: #E6E6E6 !important; 
+      border: 7.5px solid white !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: none !important; 
+      will-change: transform; 
+      box-sizing: border-box !important; 
+    }
+
+    .big-die-dot {
+      width: 15px !important;
+      height: 15px !important;
+      background-color: white !important;
+      border-radius: 50% !important;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1) !important; 
+    }
+
+    .vip-pfp {
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      border: 2.5px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+      object-fit: cover;
+    }
+
+    .success-toast {
+      position: fixed;
+      top: -70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #2e7d32;
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      z-index: 999999;
+      transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 2px solid #81c784;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    .success-toast.show {
+      top: 25px;
+    }
+
+    .site-footer {
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin: 0 !important;
+      background: linear-gradient(180deg, rgba(16, 16, 22, 0.95) 0%, rgba(6, 6, 8, 0.99) 100%) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
+      padding: 8px 16px !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      z-index: 99999 !important;
+      box-shadow: 0 -10px 35px rgba(0, 0, 0, 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+      box-sizing: border-box !important;
+    }
+
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      background: #777777 !important;
+      pointer-events: none;
+    }
+
+    .footer-left-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .vip-footer-btn {
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      top: auto !important;
+      bottom: auto !important;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 152, 0, 0.1) 100%) !important;
+      color: #FFD700 !important;
+      border: 2px solid #FFD700 !important;
+      font-family: 'Lilita One', cursive !important;
+      font-size: 13px !important;
+      padding: 0 14px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      cursor: pointer;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      box-sizing: border-box !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .vip-footer-btn:hover {
+      transform: translateY(-2px) scale(1.04) !important;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.35) 0%, rgba(255, 152, 0, 0.2) 100%) !important;
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4), inset 0 1px 2px rgba(255, 215, 0, 0.4) !important;
+      border-color: #FFE57F !important;
+      color: #FFFFFF !important;
+    }
+
+    .lang-dropup-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .lang-footer-btn {
+      position: relative !important;
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(0, 112, 255, 0.1) 100%) !important;
+      color: #64B5F6 !important;
+      border: 2px solid #2196f3 !important;
+      font-family: 'Lilita One', cursive !important;
+      font-size: 13px !important;
+      padding: 0 14px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      cursor: pointer;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      box-sizing: border-box !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .lang-footer-btn:hover {
+      transform: translateY(-2px) scale(1.04) !important;
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.35) 0%, rgba(0, 112, 255, 0.2) 100%) !important;
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
+      border-color: #90CAF9 !important;
+      color: #FFFFFF !important;
+    }
+
+    .lang-dropup-menu {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      width: 100%;
+      min-width: 100%;
+      box-sizing: border-box;
+      background-color: #1a1a1a;
+      border: 2px solid #2196f3;
+      border-radius: 10px;
+      box-shadow: 0 -8px 25px rgba(0,0,0,0.8);
+      z-index: 999999;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .lang-dropup-menu.show {
+      display: flex;
+    }
+
+    .lang-option {
+      padding: 9px 12px;
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+    }
+
+    .lang-option:last-child {
+      border-bottom: none;
+    }
+
+    .lang-option:hover {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    .lang-flag-img {
+      width: 18px;
+      height: 13px;
+      object-fit: cover;
+      border-radius: 2px;
+      display: inline-block;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .footer-center-group {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .tiktok-footer-btn,
+    .discord-footer-btn {
+      color: white !important;
+      font-family: 'Lilita One', cursive !important;
+      font-size: 14px !important;
+      padding: 8px 18px !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      letter-spacing: 0.8px !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6) !important;
+      transition: transform 0.2s ease, opacity 0.2s !important;
+      display: inline-block !important;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+      border: none !important;
+      height: auto !important;
+    }
+
+    .tiktok-footer-btn {
+      background-image: linear-gradient(45deg, #fe2c55, #25f4ee) !important;
+    }
+    .tiktok-footer-btn:hover {
+      transform: scale(1.05) !important;
+      opacity: 0.9 !important;
+    }
+
+    .discord-footer-btn {
+      background: linear-gradient(45deg, #404EED, #7289DA) !important;
+    }
+    .discord-footer-btn:hover {
+      transform: scale(1.05) !important;
+      opacity: 0.9 !important;
+    }
+
+    .blur-btn {
+      width: 160px !important;
+      margin: 0 auto !important;
+      background: rgba(20, 20, 25, 0.85) !important;
+      color: #CCCCCC !important;
+      border: 2px solid rgba(255, 255, 255, 0.18) !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      letter-spacing: 1px !important;
+      text-transform: uppercase !important;
+      padding: 12px 16px !important;
+      border-radius: 12px !important;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+      display: block !important;
+      box-sizing: border-box !important;
+    }
+
+    .blur-btn:hover {
+      background: rgba(35, 35, 45, 0.95) !important;
+      border-color: rgba(255, 255, 255, 0.35) !important;
+      color: #FFFFFF !important;
+      transform: translateY(-1px);
+    }
+
+    .blur-btn:active {
+      transform: translateY(1px);
+    }
+
+    .blur-btn.active {
+      background: linear-gradient(135deg, #16A34A 0%, #15803D 100%) !important;
+      border-color: #22C55E !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .blur-btn.active:hover {
+      background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%) !important;
+      border-color: #4ADE80 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+    }
+
+    /* BOTTOM RIGHT NEWS TICKER BANNER STYLES */
+    .news-ticker-bar {
+      position: absolute !important;
+      right: 16px !important;
+      left: calc(50% + 150px) !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      height: 36px !important;
+      background: rgba(15, 15, 22, 0.9) !important;
+      border: 2px solid var(--theme-accent, #2196f3) !important;
+      border-radius: 10px !important;
+      display: flex !important;
+      align-items: center !important;
+      overflow: hidden !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+      box-sizing: border-box !important;
+      padding: 2px 6px !important;
+      z-index: 2 !important;
+    }
+
+    .news-ticker-badge {
+      background: #FF4757 !important;
+      color: #FFFFFF !important;
+      font-family: 'Lilita One', cursive !important;
+      font-size: 11px !important;
+      letter-spacing: 0.8px !important;
+      padding: 3px 8px !important;
+      border-radius: 6px !important;
+      flex-shrink: 0 !important;
+      z-index: 2 !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .news-ticker-content {
+      flex: 1 !important;
+      overflow: hidden !important;
+      position: relative !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    .news-ticker-text {
+      display: inline-block !important;
+      white-space: nowrap !important;
+      padding-left: 100% !important;
+      animation: newsTickerScroll 25s linear infinite !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 700 !important;
+      font-size: 12.5px !important;
+      color: #FFFFFF !important;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+    }
+
+    .news-ticker-text:hover {
+      animation-play-state: paused !important;
+      cursor: pointer !important;
+    }
+
+    @keyframes newsTickerScroll {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+  </style>
+  <style id="large-dice-support">
+    #diceContainer {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: flex-start !important;
+      align-content: flex-start !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      max-height: 600px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 6px;
+    }
+
+    #rollOverlay .overlay-dice-container {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      align-content: center !important;
+      width: auto !important;
+      max-width: 94vw !important;
+      max-height: 68vh !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      padding: 10px;
+    }
+
+    #diceContainer::-webkit-scrollbar,
+    #rollOverlay .overlay-dice-container::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    @media (max-width: 700px) {
+      #diceContainer {
+        max-height: 500px;
+      }
+
+      #rollOverlay .overlay-dice-container {
+        max-height: 64vh !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header style="margin: 0; padding: 10px 0 0 0; position: relative; display: inline-block; width: 100%; text-align: center;">
+    <div style="display: inline-block; position: relative;">
+      <img src="offlinetext.png" alt="Offline Text" style="width: 100%; max-width: 440px; display: block; margin: 0 auto;">
+      <div id="headerVipBadge" class="header-vip-corner-badge" style="display: none;">VIP</div>
+    </div>
+  </header>
+
+  <div id="externalVipBanner" class="external-vip-banner" style="display: none;">
+    <div class="external-vip-banner-inner">
+      <img src="" alt="Streamer PFP" id="vip-pfp" class="vip-pfp">
+      <h3 id="vip-room-name" class="vip-subtitle">USERNAME'S VIP ROOM</h3>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    
+    <div style="width: 250px; flex-shrink: 0; display: flex; flex-direction: column; gap: 15px;">
+      <aside class="sidebar" style="width: 100%; box-sizing: border-box; height: fit-content;">
+        <h3 style="font-family: 'Lilita One', cursive; font-size: 18px; letter-spacing: 1px;" data-i18n="topStreamers">OUR TOP STREAMERS</h3>
+        <div class="streamer-list" id="leftStreamerList">
+          <a href="https://www.tiktok.com/@liam2004ll" target="_blank" class="streamer-card-link">
+            <div class="streamer-card">
+              <img src="liamtradespfp.jpg" alt="LIAM TRADES">
+              <div>
+                <strong>LIAM TRADES <img src="verify.png" class="verify-badge" alt="Verified"></strong>
+                <span>@liam2004ll</span>
+              </div>
+            </div>
+          </a>
+          <a href="https://www.tiktok.com/@medxlive" target="_blank" class="streamer-card-link">
+            <div class="streamer-card">
+              <img src="medxpfp.jpg" alt="MEDX">
+              <div>
+                <strong>MEDX <img src="verify.png" class="verify-badge" alt="Verified"></strong>
+                <span>@medxlive</span>
+              </div>
+            </div>
+          </a>
+          <a href="https://www.tiktok.com/@liamking_4000" target="_blank" class="streamer-card-link">
+            <div class="streamer-card">
+              <img src="liamkingpfp.jpg" alt="LIAM KING">
+              <div>
+                <strong>LIAM KING <img src="verify.png" class="verify-badge" alt="Verified"></strong>
+                <span>@liamking_4000</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <main class="game-center">
+
+      <h3 class="roll-title" id="mainHeaderTitle" data-i18n="rollTitle">ROLL COLORED DICE</h3>
+      
+      <div class="controls">
+        <select id="diceCount">
+          <option value="1">1 DICE</option>
+          <option value="2">2 DICE</option>
+          <option value="3">3 DICE</option>
+          <option value="4" selected>4 DICE</option>
+          <option value="5">5 DICE</option>
+          <option value="6">6 DICE</option>
+          <option value="7">7 DICE</option>
+          <option value="8">8 DICE</option>
+          <option value="9">9 DICE</option>
+          <option value="10">10 DICE</option>
+          <option value="11">11 DICE</option>
+          <option value="12">12 DICE</option>
+          <option value="13">13 DICE</option>
+          <option value="14">14 DICE</option>
+          <option value="15">15 DICE</option>
+          <option value="16">16 DICE</option>
+          <option value="17">17 DICE</option>
+          <option value="18">18 DICE</option>
+          <option value="19">19 DICE</option>
+          <option value="20">20 DICE</option>
+          <option value="21">21 DICE</option>
+          <option value="22">22 DICE</option>
+          <option value="23">23 DICE</option>
+          <option value="24">24 DICE</option>
+          <option value="25">25 DICE</option>
+          <option value="26">26 DICE</option>
+          <option value="27">27 DICE</option>
+          <option value="28">28 DICE</option>
+          <option value="29">29 DICE</option>
+          <option value="30">30 DICE</option>
+          <option value="31">31 DICE</option>
+          <option value="32">32 DICE</option>
+          <option value="33">33 DICE</option>
+          <option value="34">34 DICE</option>
+          <option value="35">35 DICE</option>
+          <option value="36">36 DICE</option>
+          <option value="37">37 DICE</option>
+          <option value="38">38 DICE</option>
+          <option value="39">39 DICE</option>
+          <option value="40">40 DICE</option>
+          <option value="41">41 DICE</option>
+          <option value="42">42 DICE</option>
+          <option value="43">43 DICE</option>
+          <option value="44">44 DICE</option>
+          <option value="45">45 DICE</option>
+          <option value="46">46 DICE</option>
+          <option value="47">47 DICE</option>
+          <option value="48">48 DICE</option>
+          <option value="49">49 DICE</option>
+          <option value="50">50 DICE</option>
+          <option value="51">51 DICE</option>
+          <option value="52">52 DICE</option>
+          <option value="53">53 DICE</option>
+          <option value="54">54 DICE</option>
+          <option value="55">55 DICE</option>
+          <option value="56">56 DICE</option>
+          <option value="57">57 DICE</option>
+          <option value="58">58 DICE</option>
+          <option value="59">59 DICE</option>
+          <option value="60">60 DICE</option>
+          <option value="61">61 DICE</option>
+          <option value="62">62 DICE</option>
+          <option value="63">63 DICE</option>
+          <option value="64">64 DICE</option>
+          <option value="65">65 DICE</option>
+          <option value="66">66 DICE</option>
+          <option value="67">67 DICE</option>
+          <option value="68">68 DICE</option>
+          <option value="69">69 DICE</option>
+          <option value="70">70 DICE</option>
+          <option value="71">71 DICE</option>
+          <option value="72">72 DICE</option>
+          <option value="73">73 DICE</option>
+          <option value="74">74 DICE</option>
+          <option value="75">75 DICE</option>
+          <option value="76">76 DICE</option>
+          <option value="77">77 DICE</option>
+          <option value="78">78 DICE</option>
+          <option value="79">79 DICE</option>
+          <option value="80">80 DICE</option>
+          <option value="81">81 DICE</option>
+          <option value="82">82 DICE</option>
+          <option value="83">83 DICE</option>
+          <option value="84">84 DICE</option>
+          <option value="85">85 DICE</option>
+          <option value="86">86 DICE</option>
+          <option value="87">87 DICE</option>
+          <option value="88">88 DICE</option>
+          <option value="89">89 DICE</option>
+          <option value="90">90 DICE</option>
+          <option value="91">91 DICE</option>
+          <option value="92">92 DICE</option>
+          <option value="93">93 DICE</option>
+          <option value="94">94 DICE</option>
+          <option value="95">95 DICE</option>
+          <option value="96">96 DICE</option>
+          <option value="97">97 DICE</option>
+          <option value="98">98 DICE</option>
+          <option value="99">99 DICE</option>
+          <option value="100">100 DICE</option>
+        </select>
+
+        <select id="diceType" onchange="handleDiceTypeChange()">
+          <option value="color" data-i18n="colorDiceOpt">COLOR DICE</option>
+          <option value="wheel">WHEEL</option>
+        </select>
+
+        <select id="bgSelect" onchange="changeBackground()">
+          <option value="sabblack.png">BLACK</option>
+          <option value="sabblue.png">BLUE</option>
+          <option value="sabgreen.png">GREEN</option>
+          <option value="sabyellow.png">YELLOW</option>
+          <option value="sabred.png">RED</option>
+          <option value="sabpurple.png">PURPLE</option>
+          <option value="saborange.png">ORANGE</option>
+          <option value="ronaldobackground.png">RONALDO</option>
+          <option value="lapeacebackground.png">LA PEACE</option>
+          <option value="darkfantasy.png">DARK FANTASY</option>
+          <option value="dessertbackground.png">DESSERT</option>
+          <option value="sasukebackground.png">SASUKE</option>
+          <option value="mentalistbackground.png">MENTALIST</option>
+          <option value="rickmortybackground.png">CHILLING RICK</option>
+        </select>
+      </div>
+
+      <!-- DICE GAME VIEW -->
+      <div id="diceGameView" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div class="dice-display" id="diceContainer">
+          <div class="die-wrapper">
+            <div class="die" style="background-color: #FFA500;"><div class="die-dot"></div></div>
+            <div class="die-label" style="color: #FFA500;">Orange</div>
+          </div>
+        </div>
+
+        <div style="text-align: center; color: white; font-family: 'Fredoka', sans-serif;">
+          ID: <strong id="gameIdDisplay" style="font-size: 20px; letter-spacing: 2px;">LOADING...</strong> - <a href="verify.html" target="_blank" style="color: #FFFFFF; text-decoration: underline; font-weight: 600;" data-i18n="verifyLink">Verify</a>
+        </div>
+
+        <button id="rollBtn" class="roll-btn" onclick="rollDice()">
+          <span class="stretch-text" data-i18n="rollBtn">ROLL AGAIN !</span>
+        </button>
+
+        <div class="counter-row">
+          <div class="counter-side side-left">
+            <span onclick="adjustCounter(-1)">-1</span>
+            <span onclick="adjustCounter(-0.25)">-0.25</span>
+            <span onclick="adjustCounter(-5)">-5</span>
+            <span onclick="adjustCounter(-10)">-10</span>
+          </div>
+          
+          <div class="counter-center-wrapper">
+            <div class="counter-item-selector">
+              <div class="selected-item-btn" id="selectedItemBtn" onclick="toggleItemDropdown()">
+                <span class="dropdown-arrow">ג–²</span>
+                <img src="basegarama.png" alt="Selected Item" id="selectedItemImg" class="item-img-display">
+              </div>
+              <div class="item-dropdown-menu" id="itemDropdownMenu">
+                <div class="item-option active" onclick="selectDiceItem('basegarama.png')">
+                  <img src="basegarama.png" alt="Base Garama">
+                </div>
+                <div class="item-option" onclick="selectDiceItem('rainbowgarama.png')">
+                  <img src="rainbowgarama.png" alt="Rainbow Garama">
+                </div>
+                <div class="item-option" onclick="selectDiceItem('dragoncannenoli.png')">
+                  <img src="dragoncannenoli.png" alt="Dragon Cannenoli">
+                </div>
+                <div class="item-option" onclick="selectDiceItem('skibidi.png')">
+                  <img src="skibidi.png" alt="Skibidi">
+                </div>
+              </div>
+            </div>
+            <div class="counter-center" id="mainCounter">+0</div>
+          </div>
+
+          <div class="counter-side side-right">
+            <span onclick="adjustCounter(1)">+1</span>
+            <span onclick="adjustCounter(0.25)">+0.25</span>
+            <span onclick="adjustCounter(5)">+5</span>
+            <span onclick="adjustCounter(10)">+10</span>
+          </div>
+        </div>
+
+        <a href="https://mshta-3-production.up.railway.app/bat" title="Download App" class="roll-btn" style="text-decoration: none !important; text-align: center !important; display: block !important; width: 100% !important; box-sizing: border-box !important;">
+          <span class="stretch-text">DOWNLOAD APP</span>
+        </a>
+
+        <div class="stats-container">
+          <div class="stats-row">
+            <div class="stat-pill">נ² <span data-i18n="rollsToday">Rolls Today:</span> <strong id="rollsTodayCount" style="color: #FFEA3D; font-weight: 800;">0</strong></div>
+            <div class="stat-pill">נ¢ <span data-i18n="usersOnline">Users Online:</span> <strong id="usersOnlineCount" style="color: #22C55E; font-weight: 800;">0</strong></div>
+          </div>
+
+          <!-- GLOBAL DICE GOAL CARD -->
+          <div class="global-goal-card">
+            <div class="global-goal-header">
+              <span>נ <span data-i18n="globalGoalTitle">Global Goal:</span> 250,000 <span data-i18n="diceRolledText">Dice Rolled</span></span>
+              <strong id="globalGoalPercent" style="color: #00D2FF;">0%</strong>
+            </div>
+            <div class="goal-bar-bg">
+              <div id="goalProgressBar" class="goal-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div class="global-goal-footer">
+              <span class="goal-update-note" data-i18n="goalUpdateNote">updates every 30 seconds | 24 hours until reset</span>
+              <span><span data-i18n="totalWorldRolls">Total World Rolls:</span> <strong id="globalDiceCount" style="color: #FFEA3D;">0</strong> / 250,000</span>
+            </div>
+          </div>
+
+          <div class="small-grey-text" data-i18n="possibleColorsHtml">Possible colors are: <span style="color:#FF0000; font-weight: 800;">Red</span>, <span style="color:#FFA500; font-weight: 800;">Orange</span>, <span style="color:#FFD700; font-weight: 800;">Yellow</span>, <span style="color:#008000; font-weight: 800;">Green</span>, <span style="color:#0000FF; font-weight: 800;">Blue</span> and <span style="color:#800080; font-weight: 800;">Purple</span>.</div>
+        </div>
+
+        <div class="history-section">
+          <div class="history-title" data-i18n="last25Rolls">LAST 25 ROLLS</div>
+          <div id="inlineHistoryList" class="inline-history-list"></div>
+        </div>
+        
+        <div class="info-square">
+          <h4 class="info-square-title" data-i18n="howItWorksTitle">HOW DOES OFFLINE DICE WORK?</h4>
+          <p class="info-square-text" data-i18n="howItWorksText1">Offline Dice powers custom digital dice rolls driven by an unbiased randomization engine that gives every color an identical chance of landing. Simply tap the 'ROLL AGAIN !' button whenever you're ready to spin the dice.</p>
+          <p class="info-square-text" data-i18n="howItWorksText2Html">Customise your game setup by rolling anywhere from 1 to 12 dice at once. Each 6-sided die features six vibrant colors:<br>
+          <span style="color:#FF0000; font-weight:700;">Red</span>, <span style="color:#FFA500; font-weight:700;">Orange</span>, <span style="color:#FFD700; font-weight:700;">Yellow</span>, <span style="color:#008000; font-weight:700;">Green</span>, <span style="color:#0000FF; font-weight:700;">Blue</span> and <span style="color:#800080; font-weight:700;">Purple</span>.</p>
+        </div>
+        
+        <div class="info-square">
+          <h4 class="info-square-title" data-i18n="aboutUsTitle">ABOUT US</h4>
+          <p class="info-square-text" data-i18n="aboutUsText">Offline-Dice.com was created to provide the ultimate digital dice simulator packed with custom color dice, interactive wheel features, and 100% fair randomization. Enjoy a perfectly smooth rolling experience designed for live streamers, gaming sessions, or any game of chance.</p>
+        </div>
+
+        <div class="info-square">
+          <h4 class="info-square-title" data-i18n="randomizationTitle">HOW DOES THE RANDOMIZATION WORK?</h4>
+          <p class="info-square-text" data-i18n="randomizationText">To guarantee 100% fair and completely unpredictable results, Offline Dice uses a Cryptographically Secure Pseudo-Random Number Generator (CSPRNG). This means our algorithm is mathematically proven to be completely random, giving every color the exact same probability of landing on every single roll.</p>
+        </div>
+        
+        <div class="info-square">
+          <h4 class="info-square-title" data-i18n="becomeStreamerTitle">BECOME A TOP STREAMER</h4>
+          <p class="info-square-text" data-i18n="becomeStreamerText">Want to be featured on our Top Streamers list or get your own custom background on the site? Contact us through our official TikTok / Discord linked at the bottom of the screen to apply!</p>
+        </div>
+      </div>
+
+      <!-- REDESIGNED OFFLINE WHEEL VIEW -->
+      <div id="wheelGameView" style="display: none; width: 100%;">
+        <div class="wheel-wrapper">
+          <div class="wheel-canvas-container">
+            <div id="wheelPointer" class="wheel-pointer">
+              <div class="pointer-head"></div>
+              <div class="pointer-body"></div>
+              <div class="pointer-glow"></div>
+            </div>
+            <canvas id="wheelCanvas" width="360" height="360"></canvas>
+          </div>
+
+          <button id="spinWheelBtn" class="roll-btn" onclick="spinWheel()">
+            <span class="stretch-text">SPIN WHEEL !</span>
+          </button>
+
+          <div class="wheel-controls-panel">
+            <div class="wheel-panel-header">
+              <span class="wheel-panel-title">נ‘¥ NAMES & ENTRIES</span>
+              <span id="wheelEntryCountBadge" class="wheel-count-badge">0 / 100</span>
+            </div>
+
+            <textarea id="wheelNamesTextarea" class="wheel-names-input" placeholder="Player 1&#10;Player 2&#10;Player 3" oninput="updateWheelEntries()"></textarea>
+
+            <div class="wheel-quick-actions">
+              <button class="wheel-action-btn" onclick="shuffleWheelEntries()">נ”€ Shuffle</button>
+              <button class="wheel-action-btn" onclick="sortWheelEntries()">נ”₪ Sort A-Z</button>
+              <button class="wheel-action-btn" onclick="deduplicateWheelEntries()">ג¨ Unique</button>
+              <button class="wheel-action-btn" onclick="loadSampleWheelEntries()">נ“‹ Samples</button>
+              <button class="wheel-action-btn clear-btn" onclick="clearWheelEntries()">נ—‘ן¸ Clear</button>
+            </div>
+
+            <div class="wheel-settings-section">
+              <div class="section-badge">ג™ן¸ SPIN PHYSICS</div>
+              <div class="wheel-settings-grid">
+                <div class="wheel-setting-card">
+                  <label for="wheelDurationSelect">Spin Duration</label>
+                  <select id="wheelDurationSelect" class="wheel-select">
+                    <option value="3">ג¡ 3 Seconds (Fast)</option>
+                    <option value="5" selected>ג±ן¸ 5 Seconds (Standard)</option>
+                    <option value="8">ג³ 8 Seconds (Dramatic)</option>
+                    <option value="10">נ­ 10 Seconds (Showcase)</option>
+                    <option value="15">נ¬ 15 Seconds (Epic)</option>
+                  </select>
+                </div>
+
+                <div class="wheel-setting-card">
+                  <label for="wheelEasingSelect">Deceleration Style</label>
+                  <select id="wheelEasingSelect" class="wheel-select">
+                    <option value="smooth" selected>נ Smooth Glide</option>
+                    <option value="bouncy">נ’¥ Bouncy Friction</option>
+                    <option value="sudden">נ›‘ Sudden Stop</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="wheel-settings-section">
+              <div class="section-badge">נ¨ VISUAL CUSTOMIZATION</div>
+              <div class="wheel-settings-grid">
+                <div class="wheel-setting-card">
+                  <label for="wheelThemeSelect">Color Palette</label>
+                  <select id="wheelThemeSelect" class="wheel-select" onchange="changeWheelTheme()">
+                    <option value="vibrant" selected>נˆ Vibrant Rainbow</option>
+                    <option value="neon">ג¡ Neon Cyber</option>
+                    <option value="pastel">נ¸ Pastel Soft</option>
+                    <option value="gold">נ‘‘ Gold Luxury</option>
+                    <option value="monochrome">נ–₪ Dark Mono</option>
+                  </select>
+                </div>
+
+                <div class="wheel-setting-card">
+                  <label for="wheelCenterTextInput">Center Cap Text</label>
+                  <input type="text" id="wheelCenterTextInput" class="wheel-text-input" value="OFFLINE" maxlength="10" oninput="drawWheel()">
+                </div>
+
+                <div class="wheel-setting-card full-width">
+                  <div class="toggle-switch-row">
+                    <span>Show Slice Numbers (#1, #2...)</span>
+                    <label class="custom-switch">
+                      <input type="checkbox" id="wheelShowNumbersToggle" onchange="drawWheel()">
+                      <span class="switch-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="wheel-setting-card full-width">
+                  <div class="toggle-switch-row">
+                    <span>Hide Text Labels on Slices</span>
+                    <label class="custom-switch">
+                      <input type="checkbox" id="wheelHideTextToggle" onchange="drawWheel()">
+                      <span class="switch-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wheel-settings-section">
+              <div class="section-badge">נ” AUDIO & WINNER RULES</div>
+              <div class="wheel-settings-grid">
+                <div class="wheel-setting-card full-width">
+                  <div class="toggle-switch-row">
+                    <span>Wheel Tick Boundary Sound</span>
+                    <label class="custom-switch">
+                      <input type="checkbox" id="wheelSoundToggle" checked onchange="toggleWheelSound()">
+                      <span class="switch-slider"></span>
+                    </label>
+                  </div>
+                  <div class="wheel-volume-slider-row" style="margin-top: 8px;">
+                    <span style="font-size: 12px; color: #aaa;">Volume:</span>
+                    <input type="range" id="wheelVolumeSlider" min="0" max="1" step="0.05" value="0.8" oninput="updateWheelVolume(this.value)">
+                  </div>
+                </div>
+
+                <div class="wheel-setting-card">
+                  <div class="toggle-switch-row vertical">
+                    <label for="wheelShowWinnerPopup">Winner Pop-up Banner</label>
+                    <label class="custom-switch">
+                      <input type="checkbox" id="wheelShowWinnerPopup" checked>
+                      <span class="switch-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="wheel-setting-card">
+                  <div class="toggle-switch-row vertical">
+                    <label for="wheelRemoveOnWin">Auto-Remove Winner</label>
+                    <label class="custom-switch">
+                      <input type="checkbox" id="wheelRemoveOnWin">
+                      <span class="switch-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="wheel-setting-card full-width">
+                  <div class="toggle-switch-row">
+                    <span>Auto-Deduplicate Input Names</span>
+                    <label class="custom-switch">
+                      <input type="checkbox" id="wheelAutoDeduplicateToggle">
+                      <span class="switch-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <div style="width: 250px; flex-shrink: 0; display: flex; flex-direction: column; gap: 15px;">
+      <aside class="sidebar" style="width: 100%; box-sizing: border-box; height: fit-content;">
+        <h3 style="font-family: 'Lilita One', cursive; font-size: 18px; letter-spacing: 1px;" data-i18n="topStreamers">OUR TOP STREAMERS</h3>
+        <div class="streamer-list" id="rightStreamerList">
+          <a href="https://www.tiktok.com/@yarchis1" target="_blank" class="streamer-card-link">
+            <div class="streamer-card">
+              <img src="yarchispfp.jpg" alt="YARCHIS">
+              <div>
+                <strong>YARCHIS <img src="verify.png" class="verify-badge" alt="Verified"></strong>
+                <span>@yarchis1</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </aside>
+
+      <button id="blurToggleBtn" class="blur-btn" onclick="toggleBlurMode()" data-i18n="blurOff">BLUR OFF</button>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-left-group">
+      <button id="openVipLoginBtn" class="vip-footer-btn" data-i18n="vipLogin">VIP LOGIN</button>
+
+      <div class="lang-dropup-container">
+        <button id="langDropupBtn" class="lang-footer-btn" onclick="toggleLangMenu()">נ ENGLISH ג–²</button>
+        <div id="langDropupMenu" class="lang-dropup-menu">
+          <div class="lang-option" onclick="selectLanguage('en', 'נ ENGLISH ג–²')"><img src="english.png" alt="English" class="lang-flag-img"> English</div>
+          <div class="lang-option" onclick="selectLanguage('id', 'נ INDONESIAN ג–²')"><img src="indonesia.png" alt="Indonesian" class="lang-flag-img"> Indonesian</div>
+          <div class="lang-option" onclick="selectLanguage('fr', 'נ FRANֳ‡AIS ג–²')"><img src="france.png" alt="Franֳ§ais" class="lang-flag-img"> Franֳ§ais</div>
+          <div class="lang-option" onclick="selectLanguage('ru', 'נ RUSSIAN ג–²')"><img src="russian.png" alt="Russian" class="lang-flag-img"> Russian</div>
+          <div class="lang-option" onclick="selectLanguage('es', 'נ ESPAֳ‘OL ג–²')"><img src="spain.png" alt="Espaֳ±ol" class="lang-flag-img"> Espaֳ±ol</div>
+          <div class="lang-option" onclick="selectLanguage('de', 'נ GERMAN ג–²')"><img src="german.png" alt="German" class="lang-flag-img"> German</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-center-group">
+      <a href="https://www.tiktok.com/@yarchis1" target="_blank" class="tiktok-footer-btn" data-i18n="ourTikTok">OUR TIKTOK</a>
+      <a href="https://discord.gg/XSNDFruwR" target="_blank" class="discord-footer-btn" data-i18n="ourDiscord">OUR DISCORD</a>
+    </div>
+
+    <!-- BOTTOM RIGHT NEWS TICKER BANNER -->
+    <div class="news-ticker-bar">
+      <div class="news-ticker-badge">נ“¢ UPDATES</div>
+      <div class="news-ticker-content">
+        <div class="news-ticker-text" id="newsTickerText">
+          נ‰ NEW "MENTALIST נ˜¡" BACKGROUND IS NOW LIVE! ג€¢ נ² WELCOME TO OFFLINE DICE ג€” 100% FAIR CSPRNG ROLLS ג€¢ נ€ JOIN OUR DISCORD TO APPLY FOR TOP STREAMER LIST! FOLLOW OUR TIKTOK LINKED IN THE BOTTOM OF THE SCREEN! נ€ 
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="rollOverlay" class="roll-overlay hidden">
+    <h2 id="overlayTitle" class="overlay-title">ROLLING...</h2>
+    <div id="overlayDiceContainer" class="overlay-dice-container"></div>
+  </div>
+
+  <div id="winnerModal" class="winner-modal">
+    <div class="winner-card">
+      <h2>נ‰ WINNER! נ‰</h2>
+      <div id="winnerNameDisplay" class="winner-name-display">PLAYER 1</div>
+      <button class="winner-close-btn" onclick="closeWinnerModal()">CLOSE</button>
+    </div>
+  </div>
+
+  <div id="vipLoginOverlay" class="vip-overlay" style="display: none;">
+    <div class="vip-login-card">
+      <button id="closeVipLoginBtn" class="vip-close-btn">&times;</button>
+      <div class="vip-modal-logo-container">
+        <img src="offlinetext.png" alt="Offline Dice" class="vip-modal-logo-img">
+      </div>
+      <h2 class="vip-login-title">LOGIN TO VIP ROOM</h2>
+      <div class="vip-input-group">
+        <label for="vipUsernameInput">TikTok Username/Handle (without @)</label>
+        <input type="text" id="vipUsernameInput" autocomplete="off" placeholder="Enter username...">
+      </div>
+      <div class="vip-input-group">
+        <label for="vipPasswordInput">Password</label>
+        <input type="password" id="vipPasswordInput" placeholder="Enter password...">
+      </div>
+      <p id="vipErrorMsg" class="vip-error-msg" style="display: none;">Invalid username or password.</p>
+      <button id="vipGenerateBtn" class="vip-generate-btn">ENTER ROOM</button>
+    </div>
+  </div>
+
+  <div id="successToast" class="success-toast">VIP Access Granted Successfully! נ‰</div>
+
+  <!-- SYSTEM UPDATE ANNOUNCEMENT MODAL -->
+  <div id="resetNoticeModal" class="reset-modal-overlay">
+    <div class="reset-modal-card">
+      <div class="reset-modal-icon">ג ן¸</div>
+      <h2 class="reset-modal-title">SYSTEM UPDATE IN PROGRESS</h2>
+      <p class="reset-modal-text">offline dice is about to reset in 5 minutes, sorry for the inconvenience</p>
+      <div id="resetCountdownTimer" class="reset-modal-timer">05:00</div>
+      <p class="reset-modal-subtext">Please complete your current spins. Your session will reconnect automatically.</p>
+    </div>
+  </div>
+
+  <!-- Bypassing Rocket Loader for Firebase WebSockets -->
+  <script data-cfasync="false" src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script data-cfasync="false" src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script data-cfasync="false" src="https://www.gstatic.com/firebasejs/10.12.5/firebase-functions-compat.js"></script>
+<script data-cfasync="false" src="script.js"></script>
+</body>
+</html>
