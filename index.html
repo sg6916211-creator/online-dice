@@ -810,49 +810,50 @@
 			    count.textContent = score > 0 ? "+" + score : score;
 			});
 			
-			$("#theme-select").on("change",function() {
-				var theme = $("#theme-select").val();
-				if(theme != "blue") {
-					$("#theme-css").attr("href","css/style.css");
-					if(theme == "gold" || theme == "sab-heaven") {
-						$("link[rel=mask-icon]").attr("color","#c6a44d");
-						$("meta[name=msapplication-TileColor]").attr("content","#c6a44d");
-						$("meta[name=theme-color]").attr("content","#c6a44d");
-					} else if (theme == "sab-blue" || theme == "sab-underwater") {
-						$("link[rel=mask-icon]").attr("color","#0088ff");
-						$("meta[name=msapplication-TileColor]").attr("content","#33aaff");
-						$("meta[name=theme-color]").attr("content","#33aaff");
-					} else if (theme == "green" || theme == "sab-green") {
-						$("link[rel=mask-icon]").attr("color","#008000");
-						$("meta[name=msapplication-TileColor]").attr("content","#008000");
-						$("meta[name=theme-color]").attr("content","#008000");
-					} else if (theme == "red" || theme == "sab-red" || theme == "sab-hell") {
-						$("link[rel=mask-icon]").attr("color","#B22222");
-						$("meta[name=msapplication-TileColor]").attr("content","#B22222");
-						$("meta[name=theme-color]").attr("content","#B22222");
-					} else if (theme == "pink") {
-						$("link[rel=mask-icon]").attr("color","#EE82EE");
-						$("meta[name=msapplication-TileColor]").attr("content","#EE82EE");
-						$("meta[name=theme-color]").attr("content","#EE82EE");
-					} else if (theme == "bw" || theme == "sab-black") {
-						$("link[rel=mask-icon]").attr("color","#000000");
-						$("meta[name=msapplication-TileColor]").attr("content","#000000");
-						$("meta[name=theme-color]").attr("content","#000000");
-					} else if (theme == "silver") {
-						$("link[rel=mask-icon]").attr("color","#999999");
-						$("meta[name=msapplication-TileColor]").attr("content","#999999");
-						$("meta[name=theme-color]").attr("content","#999999");
-					} else if (theme == "bronze") {
-						$("link[rel=mask-icon]").attr("color","#a56c43");
-						$("meta[name=msapplication-TileColor]").attr("content","#a56c43");
-						$("meta[name=theme-color]").attr("content","#a56c43");
-					}
-				} else {
-					$("#theme-css").attr("href","css/style.css");
-					$("meta[name=theme-color]").attr("content","#4dacff");
-				}
-				setCookie("theme",theme,365);
-			});
+					var THEME_STYLES = {
+			"blue": {a:"#08f", d:"#002f59"}, "sab-blue": {a:"#08f", d:"#002f59"},
+			"green": {a:"#008000", d:"#003d00"}, "sab-green": {a:"#008000", d:"#003d00"},
+			"red": {a:"#B22222", d:"#4a0000"}, "sab-red": {a:"#B22222", d:"#4a0000"},
+			"pink": {a:"#EE82EE", d:"#4a004a"}, "bw": {a:"#444", d:"#111"}, "sab-black": {a:"#222", d:"#000"},
+			"sab-heaven": {a:"#4aa8d8", d:"#1a3a55"}, "sab-hell": {a:"#8B0000", d:"#2a0000"},
+			"sab-underwater": {a:"#006994", d:"#001a2a"}, "bronze": {a:"#a56c43", d:"#3a2400"},
+			"silver": {a:"#777", d:"#222"}, "gold": {a:"#c6a44d", d:"#4a3800"}
+		};
+
+		function applyTheme(theme) {
+			var t = THEME_STYLES[theme] || THEME_STYLES["sab-blue"];
+			var img = "images/theme-" + theme + ".png";
+			var css = "body{background:" + t.a + " url('" + img + "') no-repeat fixed center / cover !important;}" +
+				"#content{background-image:none !important;}" +
+				".loader{background:" + t.a + " url('" + img + "') no-repeat fixed center / cover !important;}" +
+				"#footer{background:" + t.d + " !important;}" +
+				".filled{background:" + t.a + " !important;}" +
+				"#dice-roll-box{background:" + t.a + " !important;}" +
+				".rounded-dice{background:" + t.a + " !important;}" +
+				"#num-select,#type-select,select{border-color:" + t.a + " !important;color:" + t.a + " !important;}";
+			var st = document.getElementById('theme-style');
+			if (!st) { st = document.createElement('style'); st.id = 'theme-style'; document.head.appendChild(st); }
+			st.textContent = css;
+			$("meta[name=theme-color]").attr("content", t.a);
+			$("meta[name=msapplication-TileColor]").attr("content", t.a);
+			$("link[rel=mask-icon]").attr("color", t.a);
+			setCookie("theme", theme, 365);
+		}
+
+		$("#theme-select").on("change", function() {
+			applyTheme($("#theme-select").val());
+		});
+
+		function getCookie(name) {
+			var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+			return m ? decodeURIComponent(m[1]) : null;
+		}
+
+		var savedTheme = getCookie("theme");
+		if (savedTheme && THEME_STYLES[savedTheme]) {
+			$("#theme-select").val(savedTheme);
+			applyTheme(savedTheme);
+		}
 			
 			$(".loader-title").css("visibility","visible");	
 			var funnytitles = Array("What Color Will It Be?", "Rolling..", "Color Me Surprised!", "Amazing!", "Let's Roll!", "Let's Go!", "Good Luck!", "Fingers Crossed..", "Feeling Lucky?");
