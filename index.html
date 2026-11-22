@@ -450,7 +450,7 @@
 					</div>
 					<div class="card full block rounded" style="text-align:left;">
 						<div class="section-text">
-							<div style="border-bottom:1px dashed #fff;padding-bottom:5px;margin-bottom:5px;"><div style="padding-left:10px;">This roll:</div><div style="margin-right:5px;text-align:right;width:25px;display:inline-block;vertical-align:middle;">1.</div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:gold!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:gold!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:red!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:red!important;" class="df-solid-small-dot-d6-1"></i></div></div>						</div>
+							<div style="border-bottom:1px dashed #fff;padding-bottom:5px;margin-bottom:5px;"><div style="padding-left:10px;">This roll:</div><div style="margin-right:5px;text-align:right;width:25px;display:inline-block;vertical-align:middle;">1.</div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:gold!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:gold!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:red!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:red!important;" class="df-solid-small-dot-d6-1"></i></div></div><div id="prev-rolls"></div>						</div>
 					</div>
 				</div>
 								<div class="separator-xs"></div>
@@ -650,6 +650,22 @@
 			
 			let btnClicked = false;
 
+			var rollCount = 2;
+			function addPrevRoll(colorsArr) {
+			  var container = document.getElementById('prev-rolls');
+			  if (!container) return;
+			  var label = rollCount === 2 ? 'Previous rolls:' : '';
+			  var html = '<div style="border-bottom:1px dashed #fff;padding-bottom:5px;margin-bottom:5px;">';
+			  if (label) { html += '<div style="padding-left:10px;">' + label + '</div>'; }
+			  html += '<div style="margin-right:5px;text-align:right;width:25px;display:inline-block;vertical-align:middle;">' + rollCount + '.</div>';
+			  for (var i = 0; i < colorsArr.length; i++) {
+			    html += '<div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:32px!important;width:32px!important;height:32px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:' + colorsArr[i] + '!important;" class="df-solid-small-dot-d6-1"></i></div>';
+			  }
+			  html += '</div>';
+			  container.insertAdjacentHTML('afterbegin', html);
+			  rollCount++;
+			}
+
 			function doRoll(e) {
 			  if (e) e.preventDefault();
 			  var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
@@ -675,9 +691,12 @@
 			    dice[i].style.setProperty('color', col, 'important');
 			  }
 			  var histDice = document.querySelectorAll('#history .section-text .dice-wrapper i');
+			  var oldColors = [];
 			  for (var h = 0; h < histDice.length; h++) {
+			    oldColors.push(histDice[h].style.color || 'gold');
 			    histDice[h].style.setProperty('color', rolled[h % rolled.length], 'important');
 			  }
+			  if (oldColors.length) { addPrevRoll(oldColors); }
 			  setTimeout(function() {
 			    if (loader) { loader.classList.add('hide'); if (lt) lt.style.display = 'none'; for (var k3 = 0; k3 < lds.length; k3++) { lds[k3].style.visibility = 'hidden'; } }
 			    var ss = document.getElementById('success-sound');
