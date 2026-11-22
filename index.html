@@ -52,20 +52,13 @@
 			<div class="loader-wrapper">
 				<div class="loader-loader">
 					<h1 id="lt" class="loader-title"></h1>
-					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:rgba(0,0,0,0.08);"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:red;"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:green;"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:blue;"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:gold;"></i></div>
 				</div>
 			</div>
 		</div>
-		<style>
-		.loader-dice i { animation: rollspin 0.7s ease-in-out infinite !important; }
-		@keyframes rollspin {
-			0% { transform: rotate(0deg) scale(1); }
-			25% { transform: rotate(90deg) scale(0.85); }
-			50% { transform: rotate(180deg) scale(1.1); }
-			75% { transform: rotate(270deg) scale(0.9); }
-			100% { transform: rotate(360deg) scale(1); }
-		}
-		</style>
 		<div class="light"></div>
 				<div id="content" style="height: auto !important;">
 			<div class="inner" style="height: auto !important;">
@@ -664,11 +657,13 @@
 			  if (!dice.length) { dice = document.querySelectorAll('#dice-roll-box .dice-wrapper i'); }
 			  var loader = document.querySelector('.loader');
 			  var lt = document.querySelector('.loader-title');
-			  var ld = document.querySelector('.loader-dice i');
+			  var lds = document.querySelectorAll('.loader-dice i');
 			  var funnytitles = ["What Color Will It Be?", "Rolling..", "Color Me Surprised!", "Amazing!", "Let's Roll!", "Let's Go!", "Good Luck!", "Fingers Crossed..", "Feeling Lucky?"];
 			  if (loader) {
 			    if (lt) { lt.textContent = funnytitles[Math.floor(Math.random()*funnytitles.length)]; lt.style.display = 'block'; }
-			    if (ld) { ld.style.visibility = 'visible'; ld.style.animation = 'none'; void ld.offsetWidth; ld.style.animation = ''; }
+			    for (var k = 0; k < lds.length; k++) { lds[k].style.visibility = 'visible'; lds[k].style.animation = 'none'; }
+			    if (lds.length) { void lds[0].offsetWidth; }
+			    for (var k2 = 0; k2 < lds.length; k2++) { lds[k2].style.animation = ''; }
 			    loader.classList.remove('hide');
 			  }
 			  var rs = document.querySelector('audio[autoplay="true"]');
@@ -677,7 +672,7 @@
 			    dice[i].style.setProperty('color', colors[Math.floor(Math.random()*colors.length)], 'important');
 			  }
 			  setTimeout(function() {
-			    if (loader) { loader.classList.add('hide'); if (lt) lt.style.display = 'none'; if (ld) ld.style.visibility = 'hidden'; }
+			    if (loader) { loader.classList.add('hide'); if (lt) lt.style.display = 'none'; for (var k3 = 0; k3 < lds.length; k3++) { lds[k3].style.visibility = 'hidden'; } }
 			    var ss = document.getElementById('success-sound');
 			    if (ss) { try { ss.currentTime = 0; var p2 = ss.play(); if (p2 && p2.catch) p2.catch(function(){}); } catch(err) {} }
 			  }, 1250);
