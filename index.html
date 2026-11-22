@@ -52,10 +52,10 @@
 			<div class="loader-wrapper">
 				<div class="loader-loader">
 					<h1 id="lt" class="loader-title"></h1>
-					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:red;"></i></div>
-					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:green;"></i></div>
-					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:blue;"></i></div>
-					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:gold;"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:rgba(0,0,0,0.08);"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:rgba(0,0,0,0.08);"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:rgba(0,0,0,0.08);"></i></div>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:rgba(0,0,0,0.08);"></i></div>
 				</div>
 			</div>
 		</div>
@@ -668,14 +668,21 @@
 			  }
 			  var rs = document.querySelector('audio[autoplay="true"]');
 			  if (rs) { try { rs.currentTime = 0; var p1 = rs.play(); if (p1 && p1.catch) p1.catch(function(){}); } catch(err) {} }
+			  var rolled = [];
 			  for (var i = 0; i < dice.length; i++) {
-			    dice[i].style.setProperty('color', colors[Math.floor(Math.random()*colors.length)], 'important');
+			    var col = colors[Math.floor(Math.random()*colors.length)];
+			    rolled.push(col);
+			    dice[i].style.setProperty('color', col, 'important');
+			  }
+			  var histDice = document.querySelectorAll('#history .section-text .dice-wrapper i');
+			  for (var h = 0; h < histDice.length; h++) {
+			    histDice[h].style.setProperty('color', rolled[h % rolled.length], 'important');
 			  }
 			  setTimeout(function() {
 			    if (loader) { loader.classList.add('hide'); if (lt) lt.style.display = 'none'; for (var k3 = 0; k3 < lds.length; k3++) { lds[k3].style.visibility = 'hidden'; } }
 			    var ss = document.getElementById('success-sound');
 			    if (ss) { try { ss.currentTime = 0; var p2 = ss.play(); if (p2 && p2.catch) p2.catch(function(){}); } catch(err) {} }
-			  }, 1250);
+			  }, 1300);
 			}
 
 			function setDiceCount(n) {
