@@ -510,7 +510,7 @@
 			const ns = document.getElementById("num-select");
 			const ts = document.getElementById("type-select");
 			const ths = document.getElementById("theme-select");
-			const lt = document.getElementById("lt");						
+			const lt = document.getElementById("lt") || document.createElement("div");						
 			const savedBlurMode = sessionStorage.getItem("blurMode");
 			const diceWrappers2 = document.querySelectorAll("#history .dice-wrapper");
 
