@@ -48,6 +48,24 @@
 		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#0088ff"><meta name="msapplication-TileColor" content="#33aaff"><meta name="theme-color" content="#33aaff">	<meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9nrunKdU5m96PSN1XsSGr3qOP0lvPFUB2AiAylCDlN5DTl17uDFkpQuHj1AFtgWLxpLaiBZuhrtb2WOu7ofHwEAAACKeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElNdWx0aW1vZGFsSW5wdXQiLCJleHBpcnkiOjE3NzQzMTA0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A93bovR+QVXNx2/38qDbmeYYf1wdte9EO37K9eMq3r+541qo0byhYU899BhPB7Cv9QqD7wIbR1B6OAc9kEfYCA4AAACQeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElNdWx0aW1vZGFsSW5wdXQiLCJleHBpcnkiOjE3NzQzMTA0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A1S5fojrAunSDrFbD8OfGmFHdRFZymSM/1ss3G+NEttCLfHkXvlcF6LGLH8Mo5PakLO1sCASXU1/gQf6XGuTBgwAAACQeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElNdWx0aW1vZGFsSW5wdXQiLCJleHBpcnkiOjE3NzQzMTA0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxjhRadLCARYRJawRjMjq4U8V8okQvSnrBIJWdMajuEkN3/DfVAcLcFhMVrUWnOXagwlI8dQD84FwJDGj9ohqAYAAABveyJvcmlnaW4iOiJodHRwczovL2dvb2dsZWFkc2VydmljZXMuY29tOjQ0MyIsImZlYXR1cmUiOiJGZXRjaExhdGVyQVBJIiwiZXhwaXJ5IjoxNzI1NDA3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9"></head>
 	<body aria-hidden="false" style="">
 		
+		<div class="loader">
+			<div class="loader-wrapper">
+				<div class="loader-loader">
+					<h1 id="lt" class="loader-title"></h1>
+					<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:rgba(0,0,0,0.08);"></i></div>
+				</div>
+			</div>
+		</div>
+		<style>
+		.loader-dice i { animation: rollspin 0.7s ease-in-out infinite !important; }
+		@keyframes rollspin {
+			0% { transform: rotate(0deg) scale(1); }
+			25% { transform: rotate(90deg) scale(0.85); }
+			50% { transform: rotate(180deg) scale(1.1); }
+			75% { transform: rotate(270deg) scale(0.9); }
+			100% { transform: rotate(360deg) scale(1); }
+		}
+		</style>
 		<div class="light"></div>
 				<div id="content" style="height: auto !important;">
 			<div class="inner" style="height: auto !important;">
@@ -644,20 +662,25 @@
 			  var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
 			  var dice = document.querySelectorAll('#TN1idgBRBrjJgONaby3buMpfgJzoR0erg .dice-wrapper i');
 			  if (!dice.length) { dice = document.querySelectorAll('#dice-roll-box .dice-wrapper i'); }
+			  var loader = document.querySelector('.loader');
+			  var lt = document.querySelector('.loader-title');
+			  var ld = document.querySelector('.loader-dice i');
+			  var funnytitles = ["What Color Will It Be?", "Rolling..", "Color Me Surprised!", "Amazing!", "Let's Roll!", "Let's Go!", "Good Luck!", "Fingers Crossed..", "Feeling Lucky?"];
+			  if (loader) {
+			    if (lt) { lt.textContent = funnytitles[Math.floor(Math.random()*funnytitles.length)]; lt.style.display = 'block'; }
+			    if (ld) { ld.style.visibility = 'visible'; ld.style.animation = 'none'; void ld.offsetWidth; ld.style.animation = ''; }
+			    loader.classList.remove('hide');
+			  }
 			  var rs = document.querySelector('audio[autoplay="true"]');
 			  if (rs) { try { rs.currentTime = 0; var p1 = rs.play(); if (p1 && p1.catch) p1.catch(function(){}); } catch(err) {} }
 			  for (var i = 0; i < dice.length; i++) {
-			    dice[i].style.animation = 'none';
 			    dice[i].style.setProperty('color', colors[Math.floor(Math.random()*colors.length)], 'important');
 			  }
-			  if (dice.length) { void dice[0].offsetWidth; }
-			  for (var j = 0; j < dice.length; j++) {
-			    dice[j].style.animation = '';
-			  }
 			  setTimeout(function() {
+			    if (loader) { loader.classList.add('hide'); if (lt) lt.style.display = 'none'; if (ld) ld.style.visibility = 'hidden'; }
 			    var ss = document.getElementById('success-sound');
 			    if (ss) { try { ss.currentTime = 0; var p2 = ss.play(); if (p2 && p2.catch) p2.catch(function(){}); } catch(err) {} }
-			  }, 550);
+			  }, 1250);
 			}
 
 			function setDiceCount(n) {
@@ -821,11 +844,6 @@
 					$(".loader-title").css("display","none");
 					$(".loader-dice").css("visibility","hidden");
 					$(".loader").addClass("hide");
-					setTimeout(function() {
-					    $(".loader-title").remove();
-					    $(".loader-dice").remove();
-					    $(".loader").remove();
-					}, 500);
 				}
 				
 				function hideMsg() {
