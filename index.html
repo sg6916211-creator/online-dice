@@ -646,21 +646,18 @@
 			  if (!dice.length) { dice = document.querySelectorAll('#dice-roll-box .dice-wrapper i'); }
 			  var rs = document.querySelector('audio[autoplay="true"]');
 			  if (rs) { try { rs.currentTime = 0; var p1 = rs.play(); if (p1 && p1.catch) p1.catch(function(){}); } catch(err) {} }
-			  var start = Date.now();
-			  var iv = setInterval(function() {
-			    for (var i = 0; i < dice.length; i++) {
-			      dice[i].style.setProperty('color', colors[Math.floor(Math.random()*colors.length)], 'important');
-			    }
-			    if (Date.now() - start >= 700) {
-			      clearInterval(iv);
-			      var ss = document.getElementById('success-sound');
-			      if (ss) { try { ss.currentTime = 0; var p2 = ss.play(); if (p2 && p2.catch) p2.catch(function(){}); } catch(err) {} }
-			    }
-			  }, 70);
-			  var gid = document.getElementById('gameidcodetext');
-			  if (gid) gid.textContent = Math.random().toString(36).substring(2, 12);
-			  var c = document.getElementById('count');
-			  if (c) { var s = (parseInt(c.textContent, 10) || 0) + 1; setCookie("score", s, 365); c.textContent = s > 0 ? "+" + s : s; }
+			  for (var i = 0; i < dice.length; i++) {
+			    dice[i].style.animation = 'none';
+			    dice[i].style.setProperty('color', colors[Math.floor(Math.random()*colors.length)], 'important');
+			  }
+			  if (dice.length) { void dice[0].offsetWidth; }
+			  for (var j = 0; j < dice.length; j++) {
+			    dice[j].style.animation = '';
+			  }
+			  setTimeout(function() {
+			    var ss = document.getElementById('success-sound');
+			    if (ss) { try { ss.currentTime = 0; var p2 = ss.play(); if (p2 && p2.catch) p2.catch(function(){}); } catch(err) {} }
+			  }, 550);
 			}
 
 			function setDiceCount(n) {
